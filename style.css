@@ -1,0 +1,479 @@
+:root{
+  --primary:#0A2342;
+  --secondary:#163A63;
+  --gold:#C9A44C;
+  --gold-light:#E3C978;
+  --light:#F8F6F1;
+  --white:#ffffff;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Cairo','Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+  background:var(--light);
+  color:var(--primary);
+}
+
+/* ===========================
+   HEADER
+=========================== */
+
+header{
+  background:var(--primary);
+  border-bottom:3px solid var(--gold);
+  position:sticky;
+  top:0;
+  z-index:1000;
+}
+
+/* اللوجو */
+
+.logo{
+  height:105px;
+  width:auto;
+  object-fit:contain;
+  transition:.3s;
+}
+
+.logo:hover{
+  transform:scale(1.05);
+}
+
+/* اسم الشركة */
+
+.logo-title{
+  color:var(--gold);
+  font-size:28px;
+  font-weight:800;
+  letter-spacing:.5px;
+}
+
+/* روابط القائمة */
+
+.nav-link{
+  color:#fff;
+  transition:.3s;
+  font-weight:600;
+}
+
+.nav-link:hover{
+  color:var(--gold);
+}
+
+/* ===========================
+   HERO
+=========================== */
+
+.hero-gradient{
+  background:
+  linear-gradient(
+    135deg,
+    #0A2342 0%,
+    #163A63 60%,
+    #1F4E79 100%
+  );
+}
+
+.hero-gradient h1{
+  line-height:1.4;
+}
+
+.hero-gradient p{
+  color:rgba(255,255,255,.9);
+}
+
+/* ===========================
+   BUTTONS
+=========================== */
+
+.btn-gold{
+  background:
+  linear-gradient(
+    135deg,
+    var(--gold),
+    var(--gold-light)
+  );
+  color:var(--primary);
+  font-weight:700;
+  border:none;
+  transition:.3s;
+}
+
+.btn-gold:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 25px rgba(201,164,76,.35);
+}
+
+.btn-outline{
+  border:2px solid #fff;
+  color:#fff;
+  transition:.3s;
+}
+
+.btn-outline:hover{
+  background:#fff;
+  color:var(--primary);
+}
+
+/* ===========================
+   SECTION TITLES
+=========================== */
+
+.section-title{
+  color:var(--primary);
+  font-weight:800;
+}
+
+.section-subtitle{
+  color:#666;
+}
+
+/* ===========================
+   SERVICE ICONS
+=========================== */
+
+.feature-icon{
+  width:65px;
+  height:65px;
+  background:
+  linear-gradient(
+    135deg,
+    var(--gold),
+    var(--gold-light)
+  );
+
+  box-shadow:
+  0 10px 25px rgba(201,164,76,.25);
+}
+
+/* ===========================
+   CARDS
+=========================== */
+
+.card-hover{
+  transition:.4s;
+  border:1px solid rgba(201,164,76,.15);
+}
+
+.card-hover:hover{
+  transform:translateY(-8px);
+  border-color:var(--gold);
+  box-shadow:
+  0 20px 40px rgba(10,35,66,.15);
+}
+
+.card-hover img{
+  transition:.5s;
+}
+
+.card-hover:hover img{
+  transform:scale(1.03);
+}
+
+/* ===========================
+   PRICES
+=========================== */
+
+.price{
+  color:var(--gold);
+  font-weight:800;
+  font-size:28px;
+}
+
+/* ===========================
+   VIDEO
+=========================== */
+
+video{
+  width:100%;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:
+  0 20px 50px rgba(0,0,0,.2);
+}
+
+
+/* ===========================
+   OFFERS
+=========================== */
+
+/* ===========================
+   OFFERS
+=========================== */
+
+.offer-card{
+    width:100%;
+    max-width:380px;
+    margin:auto;
+    background:#fff;
+    border-radius:20px;
+    overflow:hidden;
+    transition:.4s;
+}
+
+.offer-card:hover{
+  transform:translateY(-8px);
+  border-color:var(--gold);
+  box-shadow:
+  0 20px 40px rgba(10,35,66,.15);
+}
+
+/* الصورة */
+
+.offer-card img{
+    width:100%;
+    height:320px;
+    object-fit:cover;
+}
+
+.offer-card:hover img{
+  transform:scale(1.03);
+}
+
+/* محتوى الكارت */
+
+.offer-card .content{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:20px;
+}
+
+/* الشاشات الكبيرة */
+
+@media(min-width:1200px){
+
+    .offer-card{
+        min-height:650px;
+    }
+
+    .offer-card img{
+        height:360px;
+    }
+
+}
+
+/* التابلت */
+
+@media(max-width:1023px){
+
+  .offer-card img{
+    height:280px;
+  }
+
+}
+
+/* الموبايل */
+
+@media(max-width:768px){
+
+  .offer-card{
+    min-height:auto;
+  }
+
+  .offer-card img{
+    height:240px;
+  }
+
+}
+
+
+/* ===========================
+   FOOTER
+=========================== */
+
+footer{
+  background:var(--primary);
+  border-top:3px solid var(--gold);
+}
+
+footer p{
+  color:rgba(255,255,255,.85);
+}
+
+/* ===========================
+   SOCIAL ICONS
+=========================== */
+
+.social-icon{
+  transition:.3s;
+}
+
+.social-icon:hover{
+  transform:translateY(-5px) scale(1.08);
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:768px){
+
+  .logo{
+    width:90px;
+  }
+
+  .logo-title{
+    font-size:20px;
+  }
+
+  .hero-gradient h1{
+    font-size:36px !important;
+  }
+
+  .price{
+    font-size:22px;
+  }
+}
+
+/* ==========================
+   OFFERS ONLY
+========================== */
+
+.offers-grid{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:30px;
+}
+
+.offers-grid .card-hover{
+    width:340px;
+    min-height:760px;
+    background:#fff;
+    border-radius:22px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+}
+
+.offers-grid .card-hover > div:first-child{
+    height:430px;
+    overflow:hidden;
+    background:#f5f5f5;
+}
+
+.offers-grid .card-hover img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.offers-grid .p-6{
+    display:flex;
+    flex-direction:column;
+    flex-grow:1;
+}
+
+.offers-grid .space-y-2{
+    flex-grow:1;
+}
+
+/* الموبايل */
+@media(max-width:768px){
+
+    .offers-grid .card-hover{
+        width:100%;
+        min-height:auto;
+    }
+
+    .offers-grid .card-hover > div:first-child{
+        height:320px;
+    }
+
+}
+
+/* ==========================
+   OFFERS GRID
+========================== */
+
+.offers-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:30px;
+  align-items:start;
+}
+
+/* ==========================
+   OFFER CARD
+========================== */
+
+.offer-card{
+  background:#fff;
+  border-radius:20px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  min-height:650px;
+}
+
+.offer-image{
+  width:100%;
+  height:320px;
+  overflow:hidden;
+}
+
+.offer-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.offer-card .p-6{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+
+.offer-card button{
+  margin-top:auto;
+}
+
+/* شاشات كبيرة */
+
+@media (min-width:1200px){
+
+  .offers-grid{
+    grid-template-columns:
+    repeat(3,minmax(340px,1fr));
+  }
+
+}
+
+/* شاشات متوسطة */
+
+@media (max-width:1199px){
+
+  .offers-grid{
+    grid-template-columns:
+    repeat(auto-fit,minmax(320px,1fr));
+  }
+
+}
+
+/* موبايل */
+
+@media (max-width:768px){
+
+  .offers-grid{
+    grid-template-columns:1fr;
+    gap:20px;
+  }
+
+  .offer-card{
+    min-height:auto;
+  }
+
+  .offer-image{
+    height:260px;
+  }
+
+}
