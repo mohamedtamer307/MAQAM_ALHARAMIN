@@ -34,7 +34,7 @@ header{
 /* اللوجو */
 
 .logo{
-  height:105px;
+  height:75px;
   width:auto;
   object-fit:contain;
   transition:.3s;
@@ -48,9 +48,20 @@ header{
 
 .logo-title{
   color:var(--gold);
-  font-size:28px;
+  font-size:22px;
   font-weight:800;
-  letter-spacing:.5px;
+  line-height:1.3;
+  display:flex;
+  flex-direction:column;
+}
+.logo-title .ar{
+  font-size:30px;
+  font-weight:800;
+}
+
+.logo-title .en{
+  font-size:18px;
+  font-weight:600;
 }
 
 /* روابط القائمة */
@@ -395,8 +406,8 @@ footer p{
 
 .offers-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-  gap:30px;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:20px;
   align-items:start;
 }
 
@@ -411,12 +422,12 @@ footer p{
   display:flex;
   flex-direction:column;
   height:100%;
-  min-height:650px;
+  min-height:520px;
 }
 
 .offer-image{
   width:100%;
-  height:320px;
+  height:220px;
   overflow:hidden;
 }
 
@@ -431,6 +442,7 @@ footer p{
   flex:1;
   display:flex;
   flex-direction:column;
+  padding:16px;
 }
 
 .offer-card button{
@@ -477,3 +489,4 @@ footer p{
   }
 
 }
+
