@@ -115,27 +115,27 @@ table.innerHTML += `
 
 <tr class="border-b text-center">
 
-<td class="p-3">
+<td class="p-3 whitespace-nowrap">
 ${booking.package_name || "-"}
 </td>
 
-<td class="p-3">
+<td class="p-3 whitespace-nowrap">
 ${booking.trip_date || "-"}
 </td>
 
-<td class="p-3">
+<td class="p-3 whitespace-nowrap">
 ${booking.room_type || "-"}
 </td>
 
-<td class="p-3">
+<td class="p-3 whitespace-nowrap">
 ${booking.full_name || "-"}
 </td>
 
-<td class="p-3">
+<td class="p-3 whitespace-nowrap">
 ${booking.phone || "-"}
 </td>
 
-<td class="p-3">
+<td class="p-3 whitespace-nowrap">
 ${booking.passengers || "-"}
 </td>
 
@@ -143,7 +143,7 @@ ${booking.passengers || "-"}
 ${booking.total_price || 0} ريال
 </td>
 
-<td class="p-3">
+<td class="p-3 whitespace-nowrap">
 
 <span class="
 px-3 py-1 rounded text-white
@@ -156,7 +156,7 @@ ${reviewed ? "تمت المراجعة" : "لم تتم المراجعة"}
 
 </td>
 
-<td class="p-3">
+<td class="p-3 whitespace-nowrap">
 
 ${
 booking.created_at
