@@ -702,7 +702,18 @@ ${booking.status || "جديد"}
 <td class="p-3">
 ${new Date(
 booking.created_at
-).toLocaleDateString("ar-SA")}
+).toLocaleString(
+"ar-SA",
+{
+timeZone:"Asia/Riyadh",
+year:"numeric",
+month:"2-digit",
+day:"2-digit",
+hour:"2-digit",
+minute:"2-digit",
+second:"2-digit"
+}
+)}
 </td>
 
 <td class="p-3">
