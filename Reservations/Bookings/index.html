@@ -53,27 +53,42 @@ class="w-full bg-teal-600 text-white p-3 rounded">
 
 <header class="bg-teal-700 text-white p-5">
 
+    
+
 <div class="flex justify-between items-center">
 
-<h1 class="text-2xl font-bold">
-إدارة الحجوزات
-</h1>
+    <div class="flex gap-3">
 
-<div class="flex gap-3">
+        <a href="../dashboard.html"
+        class="bg-blue-600 px-4 py-2 rounded-lg">
+            الباقات
+        </a>
 
-<a href="../dashboard.html"
-class="bg-blue-600 px-4 py-2 rounded-lg">
-الباقات
-</a>
+        <button
+        onclick="logoutBookings()"
+        class="bg-red-500 px-4 py-2 rounded-lg">
+            تسجيل الخروج
+        </button>
 
-<button
-onclick="logoutBookings()"
-class="bg-red-500 px-4 py-2 rounded-lg">
+    </div>
 
-تسجيل الخروج
-</button>
+    <div class="text-right">
 
-</div>
+        <h1 class="text-2xl font-bold mb-2">
+            إدارة الحجوزات
+        </h1>
+
+        <div
+        class="inline-flex items-center gap-2 bg-yellow-400 text-black px-4 py-2 rounded-xl shadow">
+
+            👤
+
+            <span id="adminName" class="font-bold">
+            </span>
+
+        </div>
+
+    </div>
 
 </div>
 
