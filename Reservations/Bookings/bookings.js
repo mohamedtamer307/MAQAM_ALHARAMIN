@@ -224,7 +224,7 @@ revenue + " ريال";
 
 }
 
-async function openWhatsapp(id,phone){
+async function openWhatsapp(id, phone){
 
 await supabaseClient
 .from("bookings")
@@ -232,6 +232,19 @@ await supabaseClient
 status:"تمت المراجعة"
 })
 .eq("id",id);
+
+// إزالة أي رموز أو مسافات
+phone = phone.replace(/\D/g, "");
+
+// إذا كان الرقم يبدأ بـ 0 نحذفه ونضيف 966
+if(phone.startsWith("0")){
+    phone = "966" + phone.substring(1);
+}
+
+// إذا لم يكن يبدأ بـ 966 نضيفها
+if(!phone.startsWith("966")){
+    phone = "966" + phone;
+}
 
 window.open(
 `https://wa.me/${phone}`,
