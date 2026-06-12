@@ -28,6 +28,16 @@ sessionStorage.setItem(
 "true"
 );
 
+sessionStorage.setItem(
+"fullName",
+data.full_name
+);
+
+sessionStorage.setItem(
+"canDelete",
+data.can_delete
+);
+
 showBookings();
 
 }
@@ -55,6 +65,9 @@ document
 document
 .getElementById("bookingsPage")
 .classList.remove("hidden");
+
+document.getElementById("adminName").innerText =
+sessionStorage.getItem("fullName");
 
 loadBookings();
 
@@ -166,17 +179,27 @@ px-3 py-1 rounded text-white
 ${reviewed ? "bg-green-600" : "bg-red-600"}
 ">
 
-${reviewed ? "تمت المراجعة" : "لم تتم المراجعة"}
+${
+reviewed
+? `تمت المراجعة بواسطة<br>${booking.reviewed_by || ""}`
+: "لم تتم المراجعة"
+}
 
 </button>
 
+${
+sessionStorage.getItem("canDelete") === "true"
+?
+`
 <button
 onclick="deleteBooking(${booking.id})"
 class="bg-red-500 text-white px-3 py-1 rounded">
-
 حذف
-
 </button>
+`
+:
+""
+}
 
 </td>
 
@@ -229,9 +252,10 @@ async function openWhatsapp(id, phone){
 await supabaseClient
 .from("bookings")
 .update({
-status:"تمت المراجعة"
+status: "تمت المراجعة",
+reviewed_by: sessionStorage.getItem("fullName")
 })
-.eq("id",id);
+.eq("id", id);
 
 // إزالة أي رموز أو مسافات
 phone = phone.replace(/\D/g, "");
