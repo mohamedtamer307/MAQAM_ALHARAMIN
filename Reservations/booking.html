@@ -3,6 +3,11 @@
 
 <head>
 
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/css/intlTelInput.min.css">
+
+
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -37,13 +42,21 @@ required
 class="w-full border p-3 rounded-lg mb-4"
 >
 
-<input
-type="tel"
-id="phone"
-placeholder="رقم الجوال"
-required
-class="w-full border p-3 rounded-lg mb-4"
->
+<div class="flex mb-4">
+
+  <span class="bg-gray-200 border border-l-0 px-4 flex items-center rounded-r-lg">
+    +966
+  </span>
+
+  <input
+    type="tel"
+    id="phone"
+    placeholder="5XXXXXXXX"
+    required
+    class="w-full border p-3 rounded-l-lg text-right"
+  >
+
+</div>
 
 <select
 id="tripDate"
@@ -151,6 +164,14 @@ class="w-full bg-[#C9A44C] text-white py-3 rounded-lg">
 
 <script src="supabase.js"></script>
 <script src="booking.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/intlTelInput.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/utils.js"></script>
+
+
+
+
 
 </body>
 </html>
