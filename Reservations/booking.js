@@ -254,9 +254,7 @@ document.getElementById(
 ).value;
 
 const phone =
-document.getElementById(
-"phone"
-).value;
+document.getElementById("phone").value;
 
 const tripDate =
 document.getElementById(
@@ -425,3 +423,28 @@ document
 
 }
 );
+
+const phoneInput = document.querySelector("#phone");
+
+const iti = window.intlTelInput(phoneInput, {
+
+    initialCountry: "sa",
+
+    preferredCountries: [
+        "sa",
+        "eg",
+        "ae",
+        "kw",
+        "qa"
+    ],
+
+    separateDialCode: true,
+
+    nationalMode: true,
+
+    autoPlaceholder: "aggressive",
+
+    utilsScript:
+    "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/utils.js"
+
+});
