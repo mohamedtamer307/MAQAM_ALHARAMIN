@@ -10,4 +10,4 @@ window.supabase.createClient(
   supabaseKey
 );
 
-const WHATSAPP_NUMBER = "966564741513";
+const WHATSAPP_NUMBER = "966561353314";
