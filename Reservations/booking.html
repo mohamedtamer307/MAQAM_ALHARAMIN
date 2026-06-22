@@ -1,12 +1,8 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 
 <head>
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/css/intlTelInput.min.css">
-
-
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +12,13 @@ href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/css/intlTelIn
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<!-- CSS الهاتف -->
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.0/build/css/intlTelInput.css"
+/>
+
+<!-- CSS الموقع -->
 <link rel="stylesheet" href="style.css">
 
 </head>
@@ -42,21 +45,28 @@ required
 class="w-full border p-3 rounded-lg mb-4"
 >
 
-<div class="flex mb-4">
+<div class="mb-4">
 
-  <span class="bg-gray-200 border border-l-0 px-4 flex items-center rounded-r-lg">
-    +966
-  </span>
-
-  <input
-    type="tel"
-    id="phone"
-    placeholder="5XXXXXXXX"
-    required
-    class="w-full border p-3 rounded-l-lg text-right"
-  >
+<input
+type="tel"
+id="phone"
+placeholder="5XXXXXXXX"
+required
+class="w-full border p-3 rounded-lg text-right"
+>
 
 </div>
+
+<select
+id="city"
+class="w-full border p-3 rounded-lg mb-4"
+required>
+
+<option value="">
+اختر مدينة الانطلاق
+</option>
+
+</select>
 
 <select
 id="tripDate"
@@ -69,8 +79,6 @@ required>
 
 </select>
 
-
-
 <select
 id="roomType"
 class="w-full border p-3 rounded-lg mb-4"
@@ -81,7 +89,7 @@ required>
 </option>
 
 <option value="خماسية مشتركة">
-خماسية خاصة/مشتركة(بالفرد)
+خماسية خاصة/مشتركة (بالفرد)
 </option>
 
 <option value="رباعية خاصة">
@@ -113,8 +121,7 @@ required>
 <input
 type="number"
 id="passengers"
-placeholder="عدد الافراد "
-value=""
+placeholder="عدد الأفراد"
 min="1"
 required
 class="w-full border p-3 rounded-lg mb-4"
@@ -137,6 +144,8 @@ class="w-full border p-3 rounded-lg mb-4">
 <div class="bg-yellow-100 p-4 rounded-xl mb-6">
 
 تنبيه:
+
+<br><br>
 
 تكلفة تمديد الليلة بدون العودة:
 140 ريال
@@ -162,16 +171,15 @@ class="w-full bg-[#C9A44C] text-white py-3 rounded-lg">
 
 </div>
 
+<!-- Supabase -->
 <script src="supabase.js"></script>
+
+<!-- مكتبة الهاتف -->
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.0/build/js/intlTelInput.min.js"></script>
+
+<!-- ملف الجافاسكربت -->
 <script src="booking.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/intlTelInput.min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/utils.js"></script>
-
-
-
-
 
 </body>
 </html>
+
