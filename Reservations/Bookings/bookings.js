@@ -1,4 +1,6 @@
-async function loginBookings(){
+let allBookings = [];
+
+async function loginBookings() {
 
 const username =
 document.getElementById("username").value;
@@ -10,12 +12,12 @@ const { data, error } =
 await supabaseClient
 .from("admins")
 .select("*")
-.eq("username",username)
-.eq("password",password)
-.eq("role","bookings")
+.eq("username", username)
+.eq("password", password)
+.eq("role", "bookings")
 .single();
 
-if(error || !data){
+if (error || !data) {
 
 alert("بيانات الدخول غير صحيحة");
 
@@ -42,9 +44,7 @@ showBookings();
 
 }
 
-
-
-function logoutBookings(){
+function logoutBookings() {
 
 sessionStorage.removeItem(
 "bookingsLogged"
@@ -54,9 +54,7 @@ location.reload();
 
 }
 
-
-
-function showBookings(){
+function showBookings() {
 
 document
 .getElementById("loginPage")
@@ -73,39 +71,46 @@ loadBookings();
 
 }
 
-
-
-if(
+if (
 sessionStorage.getItem("bookingsLogged")
-==="true"
-){
+=== "true"
+) {
 
 showBookings();
 
 }
 
-
-
-async function loadBookings(){
+async function loadBookings() {
 
 const { data, error } =
 await supabaseClient
 .from("bookings")
 .select("*")
-.order("id",{ascending:false});
+.order("id", { ascending: false });
 
-if(error){
+if (error) {
 
 console.log(error);
+
 return;
 
 }
+
+allBookings = data;
+
+updateStats(data);
+
+renderBookings(data);
+
+}
+
+function renderBookings(data){
 
 const table =
 document.getElementById("bookingsTable");
 
 table.innerHTML = "";
-updateStats(data);
+
 data.forEach(booking=>{
 
 const reviewed =
@@ -125,6 +130,10 @@ ${booking.trip_date || "-"}
 
 <td class="p-3 whitespace-nowrap">
 ${booking.room_type || "-"}
+</td>
+
+<td class="p-3 whitespace-nowrap">
+${booking.city_name || "-"}
 </td>
 
 <td class="p-3 whitespace-nowrap">
@@ -257,19 +266,12 @@ reviewed_by: sessionStorage.getItem("fullName")
 })
 .eq("id", id);
 
-// إزالة أي رموز أو مسافات
-phone = phone.replace(/\D/g, "");
+// حذف المسافات والرموز
+phone = String(phone)
+.replace(/\s/g, "")
+.replace("+", "");
 
-// إذا كان الرقم يبدأ بـ 0 نحذفه ونضيف 966
-if(phone.startsWith("0")){
-    phone = "966" + phone.substring(1);
-}
-
-// إذا لم يكن يبدأ بـ 966 نضيفها
-if(!phone.startsWith("966")){
-    phone = "966" + phone;
-}
-
+// فتح واتساب بالرقم كما هو محفوظ
 window.open(
 `https://wa.me/${phone}`,
 "_blank"
@@ -278,8 +280,6 @@ window.open(
 loadBookings();
 
 }
-
-
 
 async function deleteBooking(id){
 
@@ -306,6 +306,147 @@ loadBookings();
 
 }
 
+document.getElementById("searchName")
+.addEventListener("input", filterBookings);
+
+document.getElementById("searchPhone")
+.addEventListener("input", filterBookings);
+
+document.getElementById("statusFilter")
+.addEventListener("change", filterBookings);
+
+document.getElementById("tripDateFilter")
+.addEventListener("change", filterBookings);
+
+document.getElementById("bookingDateFilter")
+.addEventListener("change", filterBookings);
+
+function filterBookings() {
+
+const searchName =
+document.getElementById("searchName")
+.value
+.toLowerCase();
+
+const searchPhone =
+document.getElementById("searchPhone")
+.value;
+
+const status =
+document.getElementById("statusFilter")
+.value;
+
+const tripDate =
+document.getElementById("tripDateFilter")
+.value;
+
+const bookingDate =
+document.getElementById("bookingDateFilter")
+.value;
+
+const filtered = allBookings.filter(booking => {
+
+const matchName =
+(booking.full_name || "")
+.toLowerCase()
+.includes(searchName);
+
+const matchPhone =
+String(booking.phone || "")
+.includes(searchPhone);
+
+const matchStatus =
+status === "" ||
+booking.status === status;
+
+const matchTripDate =
+tripDate === "" ||
+booking.trip_date === tripDate;
+
+let matchBookingDate = true;
+
+if (bookingDate !== "") {
+
+const createdDate =
+new Date(booking.created_at)
+.toISOString()
+.split("T")[0];
+
+matchBookingDate =
+createdDate === bookingDate;
+
+}
+
+return (
+matchName &&
+matchPhone &&
+matchStatus &&
+matchTripDate &&
+matchBookingDate
+);
+
+});
+
+renderBookings(filtered);
+
+}
+
+
+function exportToExcel() {
+
+    const data = allBookings.map(booking => ({
+
+        "الباقة": booking.package_name || "",
+
+        "موعد الرحلة": booking.trip_date || "",
+
+        "نوع الحجز": booking.room_type || "",
+
+        "المدينة": booking.city_name || "",
+
+        "الاسم": booking.full_name || "",
+
+        "الجوال": booking.phone || "",
+
+        "عدد الأفراد": booking.passengers || "",
+
+        "الإجمالي": booking.total_price || 0,
+
+        "الحالة": booking.status || "",
+
+        "تاريخ الحجز":
+        booking.created_at
+        ?
+        new Date(booking.created_at)
+        .toLocaleString("ar-SA")
+        :
+        "",
+
+        "تمت المراجعة بواسطة":
+        booking.reviewed_by || ""
+
+    }));
+
+
+    const worksheet =
+    XLSX.utils.json_to_sheet(data);
+
+    const workbook =
+    XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(
+        workbook,
+        worksheet,
+        "الحجوزات"
+    );
+
+    XLSX.writeFile(
+        workbook,
+        "bookings.xlsx"
+    );
+
+}
+
 
 
 window.loginBookings = loginBookings;
@@ -316,3 +457,26 @@ window.deleteBooking = deleteBooking;
 
 window.openWhatsapp = openWhatsapp;
 
+// ======================
+// التحديث التلقائي للحجوزات
+// ======================
+
+supabaseClient
+.channel("bookings-channel")
+.on(
+"postgres_changes",
+{
+event: "*",
+schema: "public",
+table: "bookings"
+},
+(payload) => {
+
+console.log("تم تحديث الحجوزات", payload);
+
+// إعادة تحميل الجدول والإحصائيات
+loadBookings();
+
+}
+)
+.subscribe();
