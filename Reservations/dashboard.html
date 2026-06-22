@@ -389,6 +389,12 @@ class="bg-blue-500 text-white px-3 py-1 rounded">
 </button>
 
 <button
+onclick="openCities(${offer.id},'${offer.title}')"
+class="bg-purple-600 text-white px-3 py-1 rounded">
+المدن والأسعار
+</button>
+
+<button
 onclick="deleteOffer(${offer.id})"
 class="bg-red-500 text-white px-3 py-1 rounded">
 حذف
@@ -755,6 +761,217 @@ location.reload();
 
 }
 
+
+function closeCities(){
+
+document
+.getElementById("citiesModal")
+.classList.add("hidden");
+
+}
+
+
+async function openCities(id,title){
+
+document
+.getElementById("citiesModal")
+.classList.remove("hidden");
+
+document
+.getElementById("cityOfferId")
+.value=id;
+
+loadCities(id);
+
+}
+
+async function saveCity(){
+
+const offerId =
+document.getElementById("cityOfferId").value;
+
+const { error } =
+await supabaseClient
+.from("cities")
+.insert([{
+
+offer_id: offerId,
+
+city_name:
+document.getElementById("cityName").value,
+
+five_price:
+document.getElementById("cityPrice5").value,
+
+four_price:
+document.getElementById("cityPrice4").value,
+
+three_price:
+document.getElementById("cityPrice3").value,
+
+two_price:
+document.getElementById("cityPrice2").value,
+
+single_price:
+document.getElementById("citySingle").value,
+
+transport_one_way:
+document.getElementById("cityGo").value,
+
+transport_round_trip:
+document.getElementById("cityReturn").value
+
+}]);
+
+
+if(error){
+
+console.log(error);
+
+alert("فشل إضافة المدينة");
+
+return;
+
+}
+
+alert("تمت إضافة المدينة بنجاح");
+
+document.getElementById("cityName").value="";
+document.getElementById("cityPrice5").value="";
+document.getElementById("cityPrice4").value="";
+document.getElementById("cityPrice3").value="";
+document.getElementById("cityPrice2").value="";
+document.getElementById("citySingle").value="";
+document.getElementById("cityGo").value="";
+document.getElementById("cityReturn").value="";
+
+loadCities(offerId);
+
+}
+
+async function loadCities(id){
+
+const { data, error } =
+await supabaseClient
+.from("cities")
+.select("*")
+.eq("offer_id", id);
+
+if(error){
+console.log(error);
+alert(error.message);
+return;
+}
+
+if(!data){
+return;
+}
+
+let html = `
+<table class="w-full mt-5">
+<tr class="bg-gray-200">
+<th class="p-2">المدينة</th>
+<th class="p-2">الخماسية</th>
+<th class="p-2">الرباعية</th>
+<th class="p-2">حذف</th>
+</tr>
+`;
+
+data.forEach(city=>{
+
+html += `
+<tr class="border-b">
+<td class="p-2">${city.city_name}</td>
+<td class="p-2">${city.five_price}</td>
+<td class="p-2">${city.four_price}</td>
+<td class="p-2">
+<button
+onclick="deleteCity(${city.id})"
+class="bg-red-500 text-white px-3 py-1 rounded">
+حذف
+</button>
+</td>
+</tr>
+`;
+
+});
+
+html += "</table>";
+
+document.getElementById("citiesTable").innerHTML = html;
+
+}
+
+async function deleteCity(id){
+
+if(!confirm("حذف المدينة؟"))
+return;
+
+await supabaseClient
+.from("cities")
+.delete()
+.eq("id",id);
+
+loadCities(
+document.getElementById("cityOfferId").value
+);
+
+}
+
+async function saveCity(){
+
+const offerId =
+document.getElementById("cityOfferId").value;
+
+const { error } =
+await supabaseClient
+.from("cities")
+.insert([{
+
+offer_id: offerId,
+
+city_name:
+document.getElementById("cityName").value,
+
+five_price:
+document.getElementById("cityPrice5").value,
+
+four_price:
+document.getElementById("cityPrice4").value,
+
+three_price:
+document.getElementById("cityPrice3").value,
+
+two_price:
+document.getElementById("cityPrice2").value,
+
+single_price:
+document.getElementById("citySingle").value,
+
+transport_one_way:
+document.getElementById("cityGo").value,
+
+transport_round_trip:
+document.getElementById("cityReturn").value
+
+}]);
+
+if(error){
+
+console.log(error);
+
+alert(error.message);
+
+return;
+
+}
+
+alert("تمت إضافة المدينة بنجاح");
+
+loadCities(offerId);
+
+}
+
 window.login = login;
 window.editOffer = editOffer;
 window.deleteOffer = deleteOffer;
@@ -762,6 +979,61 @@ window.deleteBooking = deleteBooking;
 window.logout = logout;
 
 </script>
+
+<div id="citiesModal"
+class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+
+<div class="bg-white p-6 rounded-xl w-full max-w-4xl">
+
+<h2 class="text-2xl font-bold mb-5">
+إدارة المدن
+</h2>
+
+<input type="hidden" id="cityOfferId">
+
+<div class="grid md:grid-cols-3 gap-3 mb-4">
+
+<input id="cityName" placeholder="اسم المدينة" class="border p-3 rounded">
+
+<input id="cityPrice5" placeholder="الخماسية" class="border p-3 rounded">
+
+<input id="cityPrice4" placeholder="الرباعية" class="border p-3 rounded">
+
+<input id="cityPrice3" placeholder="الثلاثية" class="border p-3 rounded">
+
+<input id="cityPrice2" placeholder="الثنائية" class="border p-3 rounded">
+
+<input id="citySingle" placeholder="الخاصة" class="border p-3 rounded">
+
+<input id="cityGo" placeholder="ذهاب فقط" class="border p-3 rounded">
+
+<input id="cityReturn" placeholder="ذهاب وعودة" class="border p-3 rounded">
+
+</div>
+
+<button
+onclick="saveCity()"
+class="bg-green-600 text-white px-6 py-3 rounded">
+
+إضافة المدينة
+
+</button>
+
+<div id="citiesTable"
+class="mt-6">
+</div>
+
+<button
+onclick="closeCities()"
+class="bg-red-500 text-white px-5 py-2 rounded mt-5">
+
+إغلاق
+
+</button>
+
+</div>
+
+</div>
 
 </body>
 </html>
