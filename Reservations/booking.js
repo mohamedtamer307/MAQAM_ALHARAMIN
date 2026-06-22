@@ -3,6 +3,13 @@ const offerId = params.get("id");
 
 let selectedOffer = null;
 
+let selectedCity = null;
+
+document.getElementById(
+"totalPrice"
+).innerHTML =
+"الإجمالي: 0 ريال";
+
 if (!offerId) {
 
   alert("لم يتم اختيار باقة");
@@ -57,6 +64,7 @@ async function loadOffer() {
   `;
 
   loadTrips();
+loadCities();
 
 }
 
@@ -138,8 +146,15 @@ passengersInput.classList.remove(
 
 function calculatePrice(){
 
-if(!selectedOffer){
+if (!selectedCity) {
+
+document.getElementById(
+"totalPrice"
+).innerHTML =
+"الإجمالي: 0 ريال";
+
 return 0;
+
 }
 
 const roomType =
@@ -156,35 +171,35 @@ if(roomType === "خماسية مشتركة"){
 
 total =
 passengers *
-Number(selectedOffer.five_price || 0);
+Number(selectedCity.five_price || 0);
 
 }
 
 else if(roomType === "رباعية خاصة"){
 
 total =
-Number(selectedOffer.four_price || 0);
+Number(selectedCity.four_price || 0);
 
 }
 
 else if(roomType === "ثلاثية خاصة"){
 
 total =
-Number(selectedOffer.three_price || 0);
+Number(selectedCity.three_price || 0);
 
 }
 
 else if(roomType === "ثنائية خاصة"){
 
 total =
-Number(selectedOffer.two_price || 0);
+Number(selectedCity.two_price || 0);
 
 }
 
 else if(roomType === "خاصة"){
 
 total =
-Number(selectedOffer.single_price || 0);
+Number(selectedCity.single_price || 0);
 
 }
 
@@ -192,7 +207,7 @@ else if(roomType === "مواصلات ذهاب فقط"){
 
 total =
 passengers *
-Number(selectedOffer.transport_one_way || 0);
+Number(selectedCity.transport_one_way || 0);
 
 }
 
@@ -200,7 +215,7 @@ else if(roomType === "مواصلات ذهاب وعودة"){
 
 total =
 passengers *
-Number(selectedOffer.transport_round_trip || 0);
+Number(selectedCity.transport_round_trip || 0);
 
 }
 
@@ -253,8 +268,27 @@ document.getElementById(
 "fullName"
 ).value;
 
-const phone =
+
+
+const countryData =
+iti.getSelectedCountryData();
+
+let phone =
 document.getElementById("phone").value;
+
+phone = phone.replace(/\D/g, "");
+
+if (phone.startsWith("0")) {
+    phone = phone.substring(1);
+}
+
+const fullPhone =
+"+" + countryData.dialCode + phone;
+
+const cityName =
+selectedCity ?
+selectedCity.city_name
+: "";
 
 const tripDate =
 document.getElementById(
@@ -296,6 +330,13 @@ return;
 
 }
 
+if(!selectedCity){
+
+alert("يرجى اختيار مدينة الانطلاق");
+return;
+
+}
+
 if(tripDate === ""){
 
 alert("يرجى اختيار موعد الرحلة");
@@ -326,38 +367,31 @@ await supabaseClient
 .insert([
 {
 
-offer_id:
-offerId,
+offer_id: offerId,
 
-package_name:
-selectedOffer.title,
+package_name: selectedOffer.title,
 
-trip_date:
-tripDate,
+city_name: cityName,
 
-room_type:
-roomType,
+trip_date: tripDate,
 
-passengers:
-passengers,
+room_type: roomType,
 
-total_price:
-total,
+passengers: passengers,
 
-full_name:
-fullName,
+total_price: total,
 
-phone:
-phone,
+full_name: fullName,
 
-notes:
-notes,
+phone: fullPhone,
 
-status:
-"لم تتم المراجعة"
+notes: notes,
+
+status: "لم تتم المراجعة"
 
 }
 ]);
+
 
 if(error){
 
@@ -376,6 +410,9 @@ ${selectedOffer.title}
 
 🚌 موعد الرحلة:
 ${tripDate}
+
+🚍 مدينة الانطلاق:
+${cityName}
 
 🛏 نوع الحجز:
 ${roomType}
@@ -414,6 +451,8 @@ document
 )
 .reset();
 
+selectedCity = null;
+
 document
 .getElementById(
 "totalPrice"
@@ -424,27 +463,133 @@ document
 }
 );
 
+
+/* ===========================
+   رقم الهاتف
+=========================== */
+
 const phoneInput = document.querySelector("#phone");
 
-const iti = window.intlTelInput(phoneInput, {
+let iti;
 
-    initialCountry: "sa",
+if (window.intlTelInput) {
 
-    preferredCountries: [
-        "sa",
-        "eg",
-        "ae",
-        "kw",
-        "qa"
-    ],
+    iti = window.intlTelInput(phoneInput, {
 
-    separateDialCode: true,
+        initialCountry: "sa",
 
-    nationalMode: true,
+        preferredCountries: [
+            "sa",
+            "eg",
+            "ae",
+            "kw",
+            "qa"
+        ],
 
-    autoPlaceholder: "aggressive",
+        separateDialCode: true,
 
-    utilsScript:
-    "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/18.2.1/js/utils.js"
+        nationalMode: true,
+
+        autoPlaceholder: "aggressive",
+
+        utilsScript:
+        "https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.0/build/js/utils.js"
+
+    });
+
+}
+
+
+/* ===========================
+   تحميل المدن
+=========================== */
+
+async function loadCities() {
+
+    const citySelect =
+    document.getElementById("city");
+
+    citySelect.innerHTML =
+    `<option value="">اختر مدينة الانطلاق</option>`;
+
+    const { data, error } =
+    await supabaseClient
+    .from("cities")
+    .select("*")
+    .eq("offer_id", offerId);
+
+    if (error) {
+
+        console.log(error);
+        return;
+
+    }
+
+    if (!data || data.length === 0) {
+
+        citySelect.innerHTML +=
+        `<option disabled>لا توجد مدن متاحة</option>`;
+
+        return;
+
+    }
+
+    data.forEach(city => {
+
+        citySelect.innerHTML += `
+        <option value="${city.id}">
+            ${city.city_name}
+        </option>
+        `;
+
+    });
+
+}
+
+
+/* ===========================
+   اختيار المدينة
+=========================== */
+
+document
+.getElementById("city")
+.addEventListener(
+"change",
+async () => {
+
+    const cityId =
+    document.getElementById("city").value;
+
+    if (cityId === "") {
+
+        selectedCity = null;
+
+        document.getElementById(
+        "totalPrice"
+        ).innerHTML =
+        "الإجمالي: 0 ريال";
+
+        return;
+
+    }
+
+    const { data, error } =
+    await supabaseClient
+    .from("cities")
+    .select("*")
+    .eq("id", cityId)
+    .single();
+
+    if (error) {
+
+        console.log(error);
+        return;
+
+    }
+
+    selectedCity = data;
+
+    calculatePrice();
 
 });
+
