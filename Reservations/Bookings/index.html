@@ -11,6 +11,49 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<style>
+.table-wrapper{
+    overflow-x:auto;
+}
+
+.bookings-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.bookings-table th,
+.bookings-table td{
+    white-space:nowrap;
+    padding:10px 8px;
+    font-size:14px;
+    text-align:center;
+}
+
+/* اللاب والكمبيوتر */
+@media (min-width:1024px){
+
+    .bookings-table{
+        min-width:100%;
+    }
+
+    .bookings-table th,
+    .bookings-table td{
+        font-size:13px;
+        padding:8px 6px;
+    }
+
+}
+
+/* الموبايل */
+@media (max-width:1023px){
+
+    .bookings-table{
+        min-width:1300px;
+    }
+
+}
+</style>
+
 </head>
 
 <body class="bg-gray-100">
@@ -69,6 +112,11 @@ class="w-full bg-teal-600 text-white p-3 rounded">
         class="bg-red-500 px-4 py-2 rounded-lg">
             تسجيل الخروج
         </button>
+<button
+onclick="exportToExcel()"
+class="bg-green-600 text-white px-4 py-2 rounded-lg">
+📊 تصدير Excel
+</button>
 
     </div>
 
@@ -139,9 +187,81 @@ class="text-3xl font-bold text-blue-600">
 
 </div>
 
-<div class="bg-white rounded-xl shadow-lg overflow-x-auto">
+<div class="bg-white rounded-xl shadow-lg">
 
-<table class="w-full min-w-[1200px]">
+<!-- البحث -->
+<div class="p-4 flex gap-3 flex-wrap">
+
+<input
+id="searchName"
+type="text"
+placeholder="بحث بالاسم"
+class="border p-2 rounded">
+
+<input
+id="searchPhone"
+type="text"
+placeholder="بحث برقم الجوال"
+class="border p-2 rounded">
+
+<select
+id="statusFilter"
+class="border p-2 rounded">
+
+<option value="">
+كل الحالات
+</option>
+
+<option value="تمت المراجعة">
+تمت المراجعة
+</option>
+
+<option value="لم تتم المراجعة">
+لم تتم المراجعة
+</option>
+
+</select>
+
+<select
+id="tripDateFilter"
+class="border p-2 rounded">
+
+<option value="">
+كل مواعيد الرحلة
+</option>
+
+<option value="السبت | الاثنين">
+السبت | الاثنين
+</option>
+
+<option value="الاثنين | الاربعاء">
+الاثنين | الاربعاء
+</option>
+
+<option value="الاربعاء | الجمعة">
+الاربعاء | الجمعة
+</option>
+
+<option value="الخميس | السبت">
+الخميس | السبت
+</option>
+
+</select>
+
+
+<input
+type="date"
+id="bookingDateFilter"
+class="border p-2 rounded">
+
+</div>
+
+<!-- الجدول -->
+<div class="bg-white rounded-xl shadow-lg">
+
+<div class="table-wrapper">
+
+<table class="bookings-table">
 
 <thead class="bg-gray-200">
 
@@ -150,6 +270,7 @@ class="text-3xl font-bold text-blue-600">
 <th class="p-3 whitespace-nowrap">الباقة</th>
 <th class="p-3 whitespace-nowrap">موعد الرحلة</th>
 <th class="p-3 whitespace-nowrap">نوع الحجز</th>
+<th class="p-3 whitespace-nowrap">المدينة</th>
 <th class="p-3 whitespace-nowrap">الاسم</th>
 <th class="p-3 whitespace-nowrap">الجوال</th>
 <th class="p-3 whitespace-nowrap">الأفراد</th>
@@ -170,10 +291,12 @@ class="text-3xl font-bold text-blue-600">
 
 </div>
 
+
+
 </div>
 
 <script src="bookings-supabase.js"></script>
 <script src="bookings.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </body>
 </html>
