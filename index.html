@@ -15,7 +15,7 @@ content="مقام الحرمين للعمرة | Maqam Al Haramain Umrah">
 content="رحلات عمرة مميزة بأفضل الأسعار وخدمات متكاملة تشمل الفنادق والمواصلات والتأشيرات.">
 
 <meta property="og:image"
-content="https://maqam-alharamin.netlify.app/preview.png">
+content="https://mohamedtamer307.github.io/MAQAM_ALHARAMIN/preview.png">
 
 <meta property="og:url"
 content="https://maqam-alharamin.netlify.app">
@@ -34,8 +34,8 @@ content="مقام الحرمين للعمرة | Maqam Al Haramain Umrah">
 content="رحلات عمرة مميزة بأفضل الأسعار وخدمات متكاملة.">
 
 <meta name="twitter:image"
-content="https://maqam-alharamin.netlify.app/preview.png">
-  
+content="https://mohamedtamer307.github.io/MAQAM_ALHARAMIN/preview.png">
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="Website Icon" type="png" href="MAQAM ALHARAMINمفرغ 3.png">
@@ -55,7 +55,7 @@ content="https://maqam-alharamin.netlify.app/preview.png">
         </div>
         <div class="hidden md:flex items-center gap-8">
           <a href="#home" class="text-white hover:text-[#C9A44C] font-medium">الرئيسية</a>
-          <a href="#hajj" class="text-white hover:text-[#C9A44C] font-medium">الحج</a>
+          <a href="#home" class="text-white hover:text-[#C9A44C] font-medium">الحج</a>
           <a href="#umrah" class="text-white hover:text-[#C9A44C] font-medium">العمرة</a>
           <a href="#services" class="text-white hover:text-[#C9A44C] font-medium">خدماتنا</a>
           <a href="hotels/index.html" class="text-white hover:text-[#C9A44C] font-medium">الفنادق</a>
@@ -65,12 +65,73 @@ content="https://maqam-alharamin.netlify.app/preview.png">
           <button class="btn-gold px-6 py-2 rounded-full">
             <i class="fas fa-user-circle mr-2"></i>تسجيل الدخول
           </button> -->
-          <button class="md:hidden">
-            <i class="fas fa-bars text-2xl text-white"></i>
-          </button>
+         <button
+id="mobileMenuBtn"
+class="md:hidden text-white">
+
+<i class="fas fa-bars text-3xl"></i>
+
+</button>
         </div>
       </div>
     </nav>
+
+    <!-- Mobile Menu -->
+
+<div
+id="mobileMenu"
+class="hidden md:hidden bg-[#0A2342] border-t border-[#C9A44C]">
+
+<a
+href="#home"
+class="block px-6 py-4 text-white hover:bg-[#163A63]">
+
+الرئيسية
+
+</a>
+
+<a
+href="#home"
+class="block px-6 py-4 text-white hover:bg-[#163A63]">
+
+الحج
+
+</a>
+
+<a
+href="#umrah"
+class="block px-6 py-4 text-white hover:bg-[#163A63]">
+
+العمرة
+
+</a>
+
+<a
+href="#services"
+class="block px-6 py-4 text-white hover:bg-[#163A63]">
+
+خدماتنا
+
+</a>
+
+<a
+href="hotels/index.html"
+class="block px-6 py-4 text-white hover:bg-[#163A63]">
+
+الفنادق
+
+</a>
+
+<a
+href="https://wa.me/966564741513"
+class="block px-6 py-4 text-white hover:bg-[#163A63]">
+
+اتصل بنا
+
+</a>
+
+</div>
+
   </header>
 
   <!-- Hero -->
@@ -441,6 +502,35 @@ window.location.href =
 
 
 <script src="index.js"></script>
+
+
+<script>
+
+const menuBtn =
+document.getElementById("mobileMenuBtn");
+
+const mobileMenu =
+document.getElementById("mobileMenu");
+
+menuBtn.addEventListener("click",()=>{
+
+mobileMenu.classList.toggle("hidden");
+
+});
+
+// إغلاق القائمة عند الضغط على أي رابط
+
+document.querySelectorAll("#mobileMenu a").forEach(link=>{
+
+link.addEventListener("click",()=>{
+
+mobileMenu.classList.add("hidden");
+
+});
+
+});
+
+</script>
 
 </body>
 </html>
