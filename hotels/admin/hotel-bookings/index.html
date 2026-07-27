@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>إدارة حجوزات الفنادق</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="stylesheet" href="hotel-bookings.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<h1>
+
+🏨 إدارة حجوزات الفنادق
+
+</h1>
+
+</div>
+
+<!-- الإحصائيات -->
+
+<div class="stats">
+
+<div class="card">
+
+<h3 id="totalBookings">0</h3>
+
+<p>إجمالي الحجوزات</p>
+
+</div>
+
+<div class="card pending">
+
+<h3 id="pendingBookings">0</h3>
+
+<p>قيد المراجعة</p>
+
+</div>
+
+<div class="card confirmed">
+
+<h3 id="confirmedBookings">0</h3>
+
+<p>تم التأكيد</p>
+
+</div>
+
+<div class="card cancelled">
+
+<h3 id="cancelledBookings">0</h3>
+
+<p>ملغية</p>
+
+</div>
+
+</div>
+
+<!-- أدوات -->
+
+<div class="toolbar">
+
+<input
+type="text"
+id="searchInput"
+placeholder="بحث باسم العميل أو الفندق أو الجوال">
+
+<select id="statusFilter">
+
+<option value="">
+
+كل الحالات
+
+</option>
+
+<option value="لم تتم المراجعة">
+
+لم تتم المراجعة
+
+</option>
+
+<option value="تم التأكيد">
+
+تم التأكيد
+
+</option>
+
+<option value="ملغية">
+
+ملغية
+
+</option>
+
+</select>
+
+<button id="exportExcel">
+
+📥 تصدير Excel
+
+</button>
+
+</div>
+
+<!-- الجدول -->
+
+<div class="table-box">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>الفندق</th>
+
+<th>العميل</th>
+
+<th>الجوال</th>
+
+<th>الوصول</th>
+
+<th>المغادرة</th>
+
+<th>الغرف</th>
+
+<th>الحالة</th>
+
+<th>الإجراءات</th>
+
+</tr>
+
+</thead>
+
+<tbody id="bookingsTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- نافذة التفاصيل -->
+
+<div id="detailsModal" class="modal">
+
+<div class="modal-content">
+
+<span id="closeModal">
+
+×
+
+</span>
+
+<h2>
+
+تفاصيل الحجز
+
+</h2>
+
+<div id="detailsContent"></div>
+
+</div>
+
+</div>
+
+<!-- مكتبة Supabase أولاً -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- ثم ملف الاتصال -->
+<script src="../../../Reservations/supabase.js"></script>
+
+<!-- ثم XLSX -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+<!-- ثم ملف الجافاسكربت -->
+<script src="hotel-bookings.js"></script>
+</body>
+
+</html>

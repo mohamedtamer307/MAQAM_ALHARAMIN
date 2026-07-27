@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>حجز الفندق</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.0/build/css/intlTelInput.css">
+
+<link rel="stylesheet" href="booking.css">
+
+</head>
+
+<body class="bg-[#F8F6F1]">
+
+<div class="max-w-4xl mx-auto py-10 px-5">
+
+<div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+
+<!-- معلومات الفندق -->
+<div id="hotelInfo"></div>
+
+<div class="p-8">
+
+<h2 class="text-3xl font-bold text-center text-[#0A2342] mb-8">
+حجز الفندق
+</h2>
+
+<form id="bookingForm">
+
+<!-- الاسم -->
+
+<label class="block font-bold text-[#0A2342] mb-2">
+الاسم الثلاثي
+</label>
+
+<input
+id="fullName"
+type="text"
+required
+placeholder="اكتب الاسم الثلاثي"
+class="w-full border rounded-xl p-3 mb-5">
+
+<!-- الهاتف -->
+
+<label class="block font-bold text-[#0A2342] mb-2">
+رقم الجوال
+</label>
+
+<div class="mb-5">
+
+<input
+id="phone"
+type="tel"
+placeholder="5XXXXXXXX"
+class="w-full border rounded-xl p-3">
+
+</div>
+
+<!-- الوصول -->
+
+<label class="block font-bold text-[#0A2342] mb-2">
+تاريخ الوصول
+</label>
+
+<input
+id="checkIn"
+type="date"
+required
+class="w-full border rounded-xl p-3 mb-5">
+
+<!-- المغادرة -->
+
+<label class="block font-bold text-[#0A2342] mb-2">
+تاريخ المغادرة
+</label>
+
+<input
+id="checkOut"
+type="date"
+required
+class="w-full border rounded-xl p-3 mb-5">
+
+<div class="grid md:grid-cols-3 gap-5">
+
+<div>
+
+<label class="block font-bold text-[#0A2342] mb-2">
+عدد الغرف
+</label>
+
+<input
+id="rooms"
+type="number"
+min="1"
+value="1"
+class="w-full border rounded-xl p-3">
+
+</div>
+
+<div>
+
+<label class="block font-bold text-[#0A2342] mb-2">
+عدد البالغين
+</label>
+
+<input
+id="adults"
+type="number"
+min="1"
+value="1"
+class="w-full border rounded-xl p-3">
+
+</div>
+
+<div>
+
+<label class="block font-bold text-[#0A2342] mb-2">
+عدد الأطفال
+</label>
+
+<input
+id="children"
+type="number"
+min="0"
+value="0"
+class="w-full border rounded-xl p-3">
+
+</div>
+
+</div>
+
+<label class="block font-bold text-[#0A2342] mt-6 mb-2">
+ملاحظات
+</label>
+
+<textarea
+id="notes"
+rows="4"
+placeholder="إذا كان لديك أي طلبات إضافية..."
+class="w-full border rounded-xl p-3"></textarea>
+
+<button
+type="submit"
+class="w-full bg-[#C9A44C] hover:bg-[#b38f36] text-white py-4 rounded-xl mt-8 text-xl font-bold transition">
+
+تأكيد الحجز
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="../../Reservations/supabase.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.0/build/js/intlTelInput.min.js"></script>
+
+<script src="booking.js"></script>
+
+</body>
+
+</html>

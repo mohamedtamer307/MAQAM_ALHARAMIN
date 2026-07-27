@@ -1,0 +1,196 @@
+:root{
+    --primary:#0A2342;
+    --gold:#C9A44C;
+    --light:#F8F6F1;
+}
+
+body{
+    background:var(--light);
+}
+
+/*======================
+HOTELS GRID
+======================*/
+
+#hotelsContainer{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(360px,1fr));
+
+gap:35px;
+
+}
+
+/*======================
+HOTELS GRID
+======================*/
+
+#hotelsContainer{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,320px);
+    justify-content:center;
+    gap:25px;
+}
+
+/*======================
+CARD
+======================*/
+
+.hotel-card{
+    background:#fff;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    display:flex;
+    flex-direction:column;
+    transition:.3s;
+     width:320px;
+    height:430px;
+}
+
+.hotel-card:hover{
+    transform:translateY(-6px);
+}
+
+/*======================
+IMAGE
+======================*/
+
+.hotel-image{
+
+height:200px;
+
+overflow:hidden;
+
+}
+
+.hotel-image img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+background:#f7f7f7;
+
+}
+
+/*======================
+BODY
+======================*/
+
+.hotel-body{
+    padding:18px;
+    display:flex;
+    flex-direction:column;
+    flex:1;
+}
+
+.hotel-body h2{
+    font-size:22px;
+    margin-bottom:8px;
+    color:#0A2342;
+}
+
+.hotel-stars{
+    font-size:18px;
+    margin-bottom:10px;
+}
+
+.hotel-body p{
+    font-size:15px;
+    margin-bottom:8px;
+}
+
+/* الوصف */
+.hotel-description{
+    color:#666;
+    font-size:14px;
+    line-height:1.8;
+
+    display:-webkit-box;
+   
+    -webkit-box-orient:vertical;
+
+    overflow:hidden;
+}
+
+/* السعر */
+
+.hotel-price{
+    color:#C9A44C;
+    font-size:22px;
+    font-weight:bold;
+    margin:12px 0;
+}
+
+/*======================
+BUTTONS
+======================*/
+
+.hotel-buttons{
+    margin-top:auto;
+    display:flex;
+    gap:10px;
+}
+
+.hotel-buttons button{
+    flex:1;
+    height:45px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:bold;
+}
+
+.details-btn{
+    background:#0A2342;
+    color:#fff;
+}
+
+.book-btn{
+    background:#C9A44C;
+    color:#fff;
+}
+
+/*======================
+MOBILE
+======================*/
+
+@media(max-width:768px){
+
+#hotelsContainer{
+
+grid-template-columns:1fr;
+
+}
+
+.hotel-image{
+
+height:230px;
+
+}
+
+.hotel-body h2{
+
+font-size:24px;
+
+}
+
+.hotel-buttons{
+
+flex-direction:column;
+
+}
+
+.hotel-buttons button{
+
+width:100%;
+
+}
+
+}

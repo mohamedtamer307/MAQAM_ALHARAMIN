@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>إدارة الفنادق</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="stylesheet" href="hotels.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1 class="page-title">
+
+إدارة الفنادق
+
+</h1>
+
+<div class="card">
+
+<button
+id="addHotelBtn"
+class="btn btn-success">
+
+➕ إضافة فندق
+
+</button>
+
+<table class="table">
+
+<thead>
+
+<tr>
+
+<th>الصورة</th>
+
+<th>اسم الفندق</th>
+
+<th>المدينة</th>
+
+<th>النجوم</th>
+
+<th>السعر</th>
+
+<th>الحالة</th>
+
+<th>التحكم</th>
+
+</tr>
+
+</thead>
+
+<tbody id="hotelsTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<div
+id="editor"
+class="modal">
+
+<div class="modal-content">
+
+<h2 id="editorTitle">
+
+إضافة فندق
+
+</h2>
+
+<div class="grid-2">
+
+<div>
+
+<label>
+
+اسم الفندق
+
+</label>
+
+<input id="hotelName">
+
+</div>
+
+<div>
+
+<label>
+
+المدينة
+
+</label>
+
+<input id="hotelCity">
+
+</div>
+
+<div>
+
+<label>
+
+المسافة عن الحرم
+
+</label>
+
+<input id="hotelDistance">
+
+</div>
+
+<div>
+
+<label>
+
+السعر يبدأ من
+
+</label>
+
+<input id="hotelPrice">
+
+</div>
+
+<div>
+
+<label>
+
+عدد النجوم
+
+</label>
+
+<select id="hotelStars">
+
+<option>1</option>
+
+<option>2</option>
+
+<option>3</option>
+
+<option>4</option>
+
+<option selected>5</option>
+
+</select>
+
+</div>
+
+<div>
+
+<label>
+
+رابط خرائط Google
+
+</label>
+
+<input id="hotelMap">
+
+</div>
+
+</div>
+
+<label>
+
+وصف مختصر
+
+</label>
+
+<textarea
+id="hotelShort">
+
+</textarea>
+
+<label>
+
+الوصف الكامل
+
+</label>
+
+<textarea
+id="hotelDescription"
+style="height:170px">
+
+</textarea>
+
+<hr>
+
+<h3>
+
+صورة الغلاف
+
+</h3>
+
+<input
+type="file"
+id="coverImage">
+
+<div
+id="coverPreview"
+class="preview">
+
+</div>
+
+<hr>
+
+<h3>
+
+صور الفندق
+
+</h3>
+
+<input
+type="file"
+id="hotelImages"
+multiple>
+
+<div
+id="imagesPreview"
+class="preview">
+
+</div>
+
+<hr>
+
+<h3>
+
+الخدمات
+
+</h3>
+
+<div
+id="servicesContainer">
+
+</div>
+
+<button
+id="addService"
+class="btn btn-primary">
+
++
+
+إضافة خدمة
+
+</button>
+
+<br><br>
+
+<button
+id="saveHotel"
+class="btn btn-success">
+
+💾 حفظ الفندق
+
+</button>
+
+<button
+id="closeEditor"
+class="btn btn-danger">
+
+إلغاء
+
+</button>
+
+</div>
+
+</div>
+
+<!-- Supabase Library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- ملف الاتصال -->
+<script src="../../Reservations/supabase.js"></script>
+
+<!-- كود إدارة الفنادق -->
+<script src="hotels.js"></script>
+
+</body>
+
+</html>
