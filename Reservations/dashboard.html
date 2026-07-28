@@ -112,7 +112,11 @@ placeholder="معلومات إضافية"
 class="border p-3 rounded h-28">
 </textarea>
 
-
+<input
+id="displayPriceText"
+type="text"
+placeholder="النص الظاهر أسفل الباقة (مثال: ابتداءً من 450 ريال)"
+class="border p-3 rounded">
 
 <input
 id="image"
@@ -376,7 +380,11 @@ ${offer.description || ""}
 
 <td class="p-3">
 <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full">
-ابتداءً من ${offer.five_price || 0} ريال
+
+${offer.display_price_text
+? offer.display_price_text
+: "لا يوجد"}
+
 </span>
 </td>
 
@@ -491,6 +499,12 @@ document.getElementById("features").value,
 extra_info:
 document.getElementById("extraInfo").value,
 
+display_price_text:
+document.getElementById("displayPriceText").value.trim(),
+
+
+
+
 trip1:
 `${document.getElementById("trip1Go").value} | ${document.getElementById("trip1Back").value}`,
 
@@ -603,6 +617,30 @@ data.features || "";
 
 document.getElementById("extraInfo").value =
 data.extra_info || "";
+
+// =========================
+// تحميل مواعيد الرحلات
+// =========================
+
+const trip1 = (data.trip1 || "").split(" | ");
+const trip2 = (data.trip2 || "").split(" | ");
+const trip3 = (data.trip3 || "").split(" | ");
+const trip4 = (data.trip4 || "").split(" | ");
+
+document.getElementById("trip1Go").value = trip1[0] || "";
+document.getElementById("trip1Back").value = trip1[1] || "";
+
+document.getElementById("trip2Go").value = trip2[0] || "";
+document.getElementById("trip2Back").value = trip2[1] || "";
+
+document.getElementById("trip3Go").value = trip3[0] || "";
+document.getElementById("trip3Back").value = trip3[1] || "";
+
+document.getElementById("trip4Go").value = trip4[0] || "";
+document.getElementById("trip4Back").value = trip4[1] || "";
+
+document.getElementById("displayPriceText").value =
+data.display_price_text || "";
 
 document.getElementById("price5").value =
 data.five_price || "";
@@ -884,12 +922,24 @@ html += `
 <td class="p-2">${city.city_name}</td>
 <td class="p-2">${city.five_price}</td>
 <td class="p-2">${city.four_price}</td>
-<td class="p-2">
+<td class="p-2 space-x-2">
+
+<button
+onclick="editCity(${city.id})"
+class="bg-blue-500 text-white px-3 py-1 rounded">
+
+تعديل
+
+</button>
+
 <button
 onclick="deleteCity(${city.id})"
 class="bg-red-500 text-white px-3 py-1 rounded">
+
 حذف
+
 </button>
+
 </td>
 </tr>
 `;
@@ -918,15 +968,61 @@ document.getElementById("cityOfferId").value
 
 }
 
-async function saveCity(){
+async function editCity(id){
+
+const { data, error } =
+await supabaseClient
+.from("cities")
+.select("*")
+.eq("id",id)
+.single();
+
+if(error){
+console.log(error);
+return;
+}
+
+document.getElementById("cityId").value=data.id;
+
+document.getElementById("cityName").value=data.city_name;
+
+document.getElementById("cityPrice5").value=data.five_price;
+
+document.getElementById("cityPrice4").value=data.four_price;
+
+document.getElementById("cityPrice3").value=data.three_price;
+
+document.getElementById("cityPrice2").value=data.two_price;
+
+document.getElementById("citySingle").value=data.single_price;
+
+document.getElementById("cityGo").value=data.transport_one_way;
+
+document.getElementById("cityReturn").value=data.transport_round_trip;
+
+document.querySelector(
+'button[onclick="saveCity()"]'
+).classList.remove("bg-green-600");
+
+document.querySelector(
+'button[onclick="saveCity()"]'
+).classList.add("bg-blue-600");
+
+document.querySelector(
+'button[onclick="saveCity()"]'
+).innerHTML="💾 حفظ التعديل";
+
+}
+
+async function saveCity() {
 
 const offerId =
 document.getElementById("cityOfferId").value;
 
-const { error } =
-await supabaseClient
-.from("cities")
-.insert([{
+const cityId =
+document.getElementById("cityId").value;
+
+const payload = {
 
 offer_id: offerId,
 
@@ -954,7 +1050,26 @@ document.getElementById("cityGo").value,
 transport_round_trip:
 document.getElementById("cityReturn").value
 
-}]);
+};
+
+let error;
+
+if(cityId){
+
+({ error } =
+await supabaseClient
+.from("cities")
+.update(payload)
+.eq("id", cityId));
+
+}else{
+
+({ error } =
+await supabaseClient
+.from("cities")
+.insert([payload]));
+
+}
 
 if(error){
 
@@ -966,7 +1081,27 @@ return;
 
 }
 
-alert("تمت إضافة المدينة بنجاح");
+document.getElementById("cityId").value="";
+document.getElementById("cityName").value="";
+document.getElementById("cityPrice5").value="";
+document.getElementById("cityPrice4").value="";
+document.getElementById("cityPrice3").value="";
+document.getElementById("cityPrice2").value="";
+document.getElementById("citySingle").value="";
+document.getElementById("cityGo").value="";
+document.getElementById("cityReturn").value="";
+
+document.querySelector(
+'button[onclick="saveCity()"]'
+).innerHTML="إضافة المدينة";
+
+document.querySelector(
+'button[onclick="saveCity()"]'
+).classList.remove("bg-blue-600");
+
+document.querySelector(
+'button[onclick="saveCity()"]'
+).classList.add("bg-green-600");
 
 loadCities(offerId);
 
@@ -990,6 +1125,8 @@ class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
 </h2>
 
 <input type="hidden" id="cityOfferId">
+
+<input type="hidden" id="cityId">
 
 <div class="grid md:grid-cols-3 gap-3 mb-4">
 
