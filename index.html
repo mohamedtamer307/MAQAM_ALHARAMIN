@@ -449,11 +449,11 @@ ${offer.description || ""}
 
 <span class="text-[#C9A44C] font-bold text-xl">
 
-ابتداءً من
-
-${offer.room_prices?.shared5 || 90}
-
-ريال
+${offer.display_price_text
+? `<div class="text-[#C9A44C] font-bold text-lg mt-3">
+${offer.display_price_text}
+</div>`
+: ""}
 
 </span>
 
