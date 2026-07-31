@@ -99,7 +99,7 @@ async function loadHotels() {
 
                 <p class="hotel-price">
 
-                    يبدأ من ${hotel.price_from}
+                    يبدأ من ${hotel.price_from} ريال
 
                 </p>
 
