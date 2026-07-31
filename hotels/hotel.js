@@ -122,7 +122,7 @@ ${"⭐".repeat(hotel.stars)}
 
 <h2>
 
-${hotel.price_from}
+ يبدأ من ${hotel.price_from} ريال
 
 </h2>
 
